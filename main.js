@@ -1,17 +1,17 @@
 const express = require('express')()
 const cors = require('cors')
 const http = require('http').createServer(express);
+require('dotenv').config()
 const io = require('socket.io')(http, {
     cors: {
       origin: '*',
     }
   });
 const { MongoClient, ServerApiVersion } = require('mongodb')
-const uri = 'mongodb+srv://xxxx'
-const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 })
+// https://www.mongodb.com/atlas/database
+const client = new MongoClient(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 })
 
 express.use(cors());
-
 var collection;
 
 io.on('connection', (socket) => {
